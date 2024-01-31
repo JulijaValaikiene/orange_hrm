@@ -15,6 +15,14 @@ public class PageLogin extends PageBase {
 
     @FindBy(xpath = "//h5[.='Login']" )
     WebElement loginText;
+    @FindBy(xpath = "//div[contains(@class, 'orangehrm-demo-credentials')]/p[1]")
+    WebElement partOfUsername;
+
+    @FindBy(xpath = "//div[contains(@class, 'orangehrm-demo-credentials')]/p[2]")
+    WebElement partOfPassword;
+    @FindBy(xpath = "//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']")
+    WebElement requiredMessage;
+
 
     public PageLogin(WebDriver driver) {
 
@@ -36,4 +44,13 @@ public class PageLogin extends PageBase {
 
         return loginText.getText();
     }
+    public String getUserNameFromText(){
+        return partOfUsername.getText().split(":")[1].trim();
+    }
+    public String getPasswordFromText(){
+        return partOfPassword.getText().split(":")[1].trim();
+    }
+public String getErrorRequiredMessage(){
+        return requiredMessage.getText();
+}
 }
