@@ -13,9 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PageLoginTest extends PageBaseTest {
     PageLogin pageLogin;
     PageAcount pageAcount;
-    String userName = "Admin";
-    String password = "admin123";
+//    String userName = "Admin";
+//    String password = "admin123";
     String wrongUserName = " ";
+    String wrongPassword = " ";
         @Test
     void loginTest(){
 //        Wait<WebDriver> wait = new WebDriverWait(driver, ofSeconds(5));
@@ -37,7 +38,6 @@ public class PageLoginTest extends PageBaseTest {
             pageLogin.clickButton();
         Assertions.assertEquals("My Actions",pageAcount.findMyActionsElement());
     }
-
     @Test
     void wrongLoginUserNameTest(){
         pageLogin = new PageLogin(driver);
@@ -48,21 +48,16 @@ public class PageLoginTest extends PageBaseTest {
         pageLogin.enterPassword(passwordText);
     Assertions.assertEquals("Required", pageLogin.getErrorRequiredMessage());
         pageLogin.clickButton();
-
     }
     @Test
     void wrongLoginPasswordTest(){
-        Wait<WebDriver> wait = new WebDriverWait(driver, ofSeconds(5));
-
-        WebElement userElement = driver.findElement(By.xpath("//input[@name='username']"));
-        WebElement passwordElement = driver.findElement(By.xpath("//input[@name='password']"));
-        Assertions.assertEquals(driver.getTitle(), "OrangeHRM");
-        assertTrue(driver.findElement(By.xpath("//h5[.='Login']")).isDisplayed());
-        wait.until(d ->userElement.isDisplayed());
-        driver.findElement(By.xpath("//input[@name='username']")).sendKeys(userName);
-        wait.until(d-> passwordElement.isDisplayed());
-        driver.findElement(By.xpath("//input[@name='password']")).sendKeys(" ");
-        assertTrue(driver.findElement(By.xpath("//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']")).isDisplayed());
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        pageLogin = new PageLogin(driver);
+        pageAcount = new PageAcount(driver);
+    Assertions.assertEquals("Login",pageLogin.findLoginElement());
+        String loginText = pageLogin.getUserNameFromText();
+        pageLogin.enterUserName(loginText);
+        pageLogin.enterPassword(wrongPassword);
+    Assertions.assertEquals("Required", pageLogin.getErrorRequiredMessage());
+        pageLogin.clickButton();
     }
 }

@@ -45,12 +45,15 @@ public class PageLogin extends PageBase {
         return loginText.getText();
     }
     public String getUserNameFromText(){
+
         return partOfUsername.getText().split(":")[1].trim();
     }
     public String getPasswordFromText(){
+
         return partOfPassword.getText().split(":")[1].trim();
     }
 public String getErrorRequiredMessage(){
+
         return requiredMessage.getText();
 }
 }
