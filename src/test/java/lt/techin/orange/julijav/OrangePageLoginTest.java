@@ -22,50 +22,6 @@ public class OrangePageLoginTest  {
     String password = "admin123";
 
 
-//public static String main (String[] args){
-//    String inputText = "Password : admin123";
-//   String[] textArray = inputText.split(":");
-//   for (String givenText: textArray) {
-//       return textArray[1].trim();
-//   }
-//   return textArray[1];
-//}
-
-//    public static void main(String[] args) {
-//        String inputText = "Password : admin123";
-//        String password = extractPassword(inputText, ":");
-//
-//        if (password != null) {
-//            System.out.println("Password: " + password);
-//        } else {
-//            System.out.println("Password not found in the input text.");
-//        }
-//    }
-//    public static String extractPassword(String inputText, String delimiter) {
-//        return Arrays.stream(inputText.split(delimiter))
-//                .skip(1) // Skip the part before the delimiter
-//                .findFirst() // Take the first element after the delimiter
-//                .map(String::trim) // Trim the password
-//                .orElse(null); // Return null if the password is not found
-//    }
-//
-////    public static String extractPassword(String inputText) {
-////        String[] textArray = inputText.split(":");
-////        if (textArray.length > 1) {
-////            return textArray[1].trim();
-////        } else {
-////            return null;
-////        }
-
-
-//    public static String extractPassword(String inputText, String delimiter) {
-//        return Arrays.stream(inputText.split(delimiter))
-//                .skip(1)
-//                .findFirst()
-//                .map(String::trim)
-//                .orElse(null);
-//    }
-
 //    public static void stepWait() {
 //        try {
 //            Thread.sleep(2000);
@@ -92,39 +48,50 @@ public class OrangePageLoginTest  {
 
         WebElement userElement = driver.findElement(By.xpath("//input[@name='username']"));
         WebElement passwordElement = driver.findElement(By.xpath("//input[@name='password']"));
-//        WebElement accountElement = driver.findElement(By.xpath("//p[text()='My Actions']"));
+        //        WebElement accountElement = driver.findElement(By.xpath("//p[text()='My Actions']"));
 
         Assertions.assertEquals(driver.getTitle(), "OrangeHRM");
         assertTrue(driver.findElement(By.xpath("//h5[.='Login']")).isDisplayed());
         wait.until(d ->userElement.isDisplayed());
         driver.findElement(By.xpath("//input[@name='username']")).sendKeys(userName);
-//        stepWait();
+        //        stepWait();
         wait.until(d-> passwordElement.isDisplayed());
         driver.findElement(By.xpath("//input[@name='password']")).sendKeys(password);
         //        stepWait();
         driver.findElement(By.xpath("//button[@type='submit']")).click();
-//        wait.until(d-> accountElement.isDisplayed());
+        //        wait.until(d-> accountElement.isDisplayed());
         assertTrue(driver.findElement(By.xpath("//p[text()='My Actions']")).isDisplayed());
     }
 
     @Test
-    void wrongLoginTest(){
+    void wrongLoginUserNameTest(){
         Wait<WebDriver> wait = new WebDriverWait(driver, ofSeconds(5));
 
         WebElement userElement = driver.findElement(By.xpath("//input[@name='username']"));
         WebElement passwordElement = driver.findElement(By.xpath("//input[@name='password']"));
-//        WebElement accountElement = driver.findElement(By.xpath("//p[text()='My Actions']"));
 
         Assertions.assertEquals(driver.getTitle(), "OrangeHRM");
         assertTrue(driver.findElement(By.xpath("//h5[.='Login']")).isDisplayed());
         wait.until(d ->userElement.isDisplayed());
-        driver.findElement(By.xpath("//input[@name='username']")).sendKeys(" ");
-        assertTrue(driver.findElement(By.xpath("//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']")).isDisplayed());
-//        stepWait();
+        driver.findElement(By.xpath("//input[@name='username']")).sendKeys(userName);
         wait.until(d-> passwordElement.isDisplayed());
-        driver.findElement(By.xpath("//input[@name='password']")).sendKeys(password);
-        //        stepWait();
+        driver.findElement(By.xpath("//input[@name='password']")).sendKeys(" ");
+        assertTrue(driver.findElement(By.xpath("//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']")).isDisplayed());
         driver.findElement(By.xpath("//button[@type='submit']")).click();
     }
+    @Test
+    void wrongLoginPasswordTest(){
+        Wait<WebDriver> wait = new WebDriverWait(driver, ofSeconds(5));
 
+        WebElement userElement = driver.findElement(By.xpath("//input[@name='username']"));
+        WebElement passwordElement = driver.findElement(By.xpath("//input[@name='password']"));
+        Assertions.assertEquals(driver.getTitle(), "OrangeHRM");
+        assertTrue(driver.findElement(By.xpath("//h5[.='Login']")).isDisplayed());
+        wait.until(d ->userElement.isDisplayed());
+        driver.findElement(By.xpath("//input[@name='username']")).sendKeys(userName);
+        wait.until(d-> passwordElement.isDisplayed());
+        driver.findElement(By.xpath("//input[@name='password']")).sendKeys(" ");
+        assertTrue(driver.findElement(By.xpath("//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']")).isDisplayed());
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+    }
 }
